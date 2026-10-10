@@ -4,7 +4,9 @@ ALL: \
 	$(TT) \
 	./exported \
 	./exported/stagemap1.png \
-	./exported/stagemap2.png
+	./exported/stagemap2.png \
+	./exported/stage-complete-01.touch \
+	./exported/stage-complete-02.touch
 
 $(TT):
 	mkdir -p $@
@@ -20,3 +22,5 @@ $(TT):
 	inkscape $< --export-filename=$@ 
 	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/E04CBBBE576B0C53.dds
 
+./exported/%.touch: %.svg
+	node ../../export-pages.js $< ./exported $(TT)
