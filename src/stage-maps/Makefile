@@ -7,7 +7,8 @@ ALL: \
 	./exported/stagemap2.png \
 	./exported/stage-complete-01.touch \
 	./exported/stage-complete-02.touch \
-	./exported/stage-complete-03.touch
+	./exported/stage-complete-03.touch \
+	./exported/stage-complete-04.touch
 
 $(TT):
 	mkdir -p $@
