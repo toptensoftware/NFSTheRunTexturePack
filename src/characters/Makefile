@@ -6,4 +6,4 @@ all: $(OUTPUTS)
 
 $(OUTDIR)/%.dds: %-topaz.png
 	@mkdir -p $(OUTDIR)
-	./conv.sh "$<" "$@"
+	bc7enc -q -g "$<" "$@"

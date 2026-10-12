@@ -13,5 +13,5 @@ $(TT):
 
 ./exported/mapsheet.png: mapsheet.svg
 	inkscape $< --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/90CE3DF27F7DCC27.dds
-
+	bc7enc -q -g $@ $(TT)/90CE3DF27F7DCC27.dds
+	

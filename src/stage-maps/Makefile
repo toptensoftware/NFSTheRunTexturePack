@@ -24,11 +24,11 @@ $(TT):
 
 ./exported/stagemap1.png: stagemap1.svg
 	inkscape $< --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/62E1F08F61948008.dds
+	bc7enc -q -g "$@" $(TT)/62E1F08F61948008.dds
 
 ./exported/stagemap2.png: stagemap2.svg
 	inkscape $< --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/E04CBBBE576B0C53.dds
+	bc7enc -q -g "$@" $(TT)/E04CBBBE576B0C53.dds
 
 ./exported/%.touch: %.svg
 	node ../../export-pages.js $< ./exported $(TT)

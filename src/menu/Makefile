@@ -17,19 +17,19 @@ $(TT):
 
 ./exported/menu-sheet.png: menu-sheet.svg
 	inkscape $< --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/6F6F438E4B246110.dds
+	bc7enc -q -g "$@" $(TT)/6F6F438E4B246110.dds
 
 ./exported/menu-arrow-small.png: menu-arrows.svg
 	$(PATCH) --hide:small:medium:large --show:small
 	inkscape temp.svg --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/E34A3787B5977B02.dds
+	bc7enc -q -g "$@" $(TT)/E34A3787B5977B02.dds
 
 ./exported/menu-arrow-medium.png: menu-arrows.svg
 	$(PATCH) --hide:small:medium:large --show:medium
 	inkscape temp.svg --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/000731415AA87031.dds
+	bc7enc -q -g "$@" $(TT)/000731415AA87031.dds
 
 ./exported/menu-arrow-large.png: menu-arrows.svg
 	$(PATCH) --hide:small:medium:large --show:large
 	inkscape temp.svg --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/73E5B47B6A461E06.dds
+	bc7enc -q -g "$@" $(TT)/73E5B47B6A461E06.dds

@@ -13,5 +13,5 @@ $(TT):
 
 ./exported/hudmap.png: hudmap.svg
 	inkscape $< --export-filename=$@ 
-	magick $@ -define dds:compression=none -define dds:mipmaps=0 $(TT)/D6406BE07F12231E.dds
+	bc7enc -q -g "$@" $(TT)/D6406BE07F12231E.dds
 
