@@ -21,8 +21,12 @@ jobs:
         with:
           node-version: lts/*
 
+      # Ubuntu's apt package is Inkscape 1.2, which has no --export-page option
+      # (needed by export-pages.js), so install the current release from the
+      # Inkscape PPA instead.
       - name: Install make and Inkscape
         run: |
+          sudo add-apt-repository -y ppa:inkscape.dev/stable
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends make inkscape
 
