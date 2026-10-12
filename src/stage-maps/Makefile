@@ -8,7 +8,13 @@ ALL: \
 	./exported/stage-complete-01.touch \
 	./exported/stage-complete-02.touch \
 	./exported/stage-complete-03.touch \
-	./exported/stage-complete-04.touch
+	./exported/stage-complete-04.touch \
+	./exported/stage-complete-05.touch \
+	./exported/stage-complete-06.touch \
+	./exported/stage-complete-07.touch \
+	./exported/stage-complete-08.touch \
+	./exported/stage-complete-09.touch \
+	./exported/stage-complete-10.touch
 
 $(TT):
 	mkdir -p $@
