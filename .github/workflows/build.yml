@@ -57,7 +57,9 @@ jobs:
           cd bc7enc_rdo
           git fetch -q --depth 1 https://github.com/richgel999/bc7enc_rdo "$BC7ENC_COMMIT"
           git checkout -q FETCH_HEAD
-          cmake -D SUPPORT_BC7E=TRUE -D CMAKE_POLICY_VERSION_MINIMUM=3.5 .
+          # ert.h uses uint8_t/uint32_t without including <cstdint>, which
+          # GCC 13+ no longer pulls in transitively, so force-include it.
+          cmake -D SUPPORT_BC7E=TRUE -D CMAKE_POLICY_VERSION_MINIMUM=3.5 -D CMAKE_CXX_FLAGS="-include cstdint" .
           make -j"$(nproc)"
           mkdir -p "$GITHUB_WORKSPACE/tools"
           cp bc7enc "$GITHUB_WORKSPACE/tools/"
