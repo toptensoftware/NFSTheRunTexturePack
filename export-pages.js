@@ -6,7 +6,7 @@
 //   node export-pages.js input.svg [output-dir [dds-dir]]
 //
 // The output directory defaults to ./exported.  If a dds directory is given
-// each exported PNG is also converted to an uncompressed .dds file (with no
+// each exported PNG is also converted to a BC7 compressed .dds file (with no
 // mip maps) in that directory.  After a successful export a
 // touch file named <input>.touch is written to the output directory so make
 // can tell when the pages need to be re-exported:
@@ -14,7 +14,7 @@
 //   ./exported/input.touch: input.svg
 //       node export-pages.js $< ./exported
 //
-// Requires inkscape (and magick, if converting to .dds) to be on the path.
+// Requires inkscape (and bc7enc, if converting to .dds) to be on the path.
 
 const fs = require('fs');
 const path = require('path');
@@ -118,7 +118,7 @@ for (const page of pages) {
         fs.rmSync(page.ddsFile, { force: true });
         run('bc7enc', ['-q', '-g', page.file, page.ddsFile]);
         if (!fs.existsSync(page.ddsFile))
-            fail(`magick didn't write ${page.ddsFile}`);
+            fail(`bc7enc didn't write ${page.ddsFile}`);
         console.log(`${page.file} -> ${page.ddsFile}`);
     }
 }

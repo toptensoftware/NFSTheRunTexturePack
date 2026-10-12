@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+    env:
+      BC7ENC_COMMIT: b9438627eef73a1157e84201b6fa6eb2ffd6d9f0
+      ISPC_VERSION: v1.24.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,12 +38,40 @@ jobs:
           sudo mv magick /usr/local/bin/magick
           echo "APPIMAGE_EXTRACT_AND_RUN=1" >> "$GITHUB_ENV"
 
+      # bc7enc has no binary releases, so build it from source (with the ISPC
+      # bc7e encoder) and cache the result. Bump the versions below to rebuild.
+      - name: Cache bc7enc
+        id: bc7enc
+        uses: actions/cache@v4
+        with:
+          path: tools/bc7enc
+          key: bc7enc-${{ runner.os }}-${{ env.BC7ENC_COMMIT }}-ispc-${{ env.ISPC_VERSION }}
+
+      - name: Build bc7enc
+        if: steps.bc7enc.outputs.cache-hit != 'true'
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl -fsSL "https://github.com/ispc/ispc/releases/download/$ISPC_VERSION/ispc-$ISPC_VERSION-linux.tar.gz" | tar xz
+          export PATH="$PWD/ispc-$ISPC_VERSION-linux/bin:$PATH"
+          git init -q bc7enc_rdo
+          cd bc7enc_rdo
+          git fetch -q --depth 1 https://github.com/richgel999/bc7enc_rdo "$BC7ENC_COMMIT"
+          git checkout -q FETCH_HEAD
+          cmake -D SUPPORT_BC7E=TRUE -D CMAKE_POLICY_VERSION_MINIMUM=3.5 .
+          make -j"$(nproc)"
+          mkdir -p "$GITHUB_WORKSPACE/tools"
+          cp bc7enc "$GITHUB_WORKSPACE/tools/"
+
+      - name: Add bc7enc to PATH
+        run: echo "$GITHUB_WORKSPACE/tools" >> "$GITHUB_PATH"
+
       - name: Tool versions
         run: |
           make --version | head -1
           node --version
           inkscape --version
           magick -version | head -1
+          command -v bc7enc
 
       - name: Build
         run: make package
