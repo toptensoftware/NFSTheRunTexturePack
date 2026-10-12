@@ -59,7 +59,9 @@ jobs:
           git checkout -q FETCH_HEAD
           # ert.h uses uint8_t/uint32_t without including <cstdint>, which
           # GCC 13+ no longer pulls in transitively, so force-include it.
-          cmake -D SUPPORT_BC7E=TRUE -D CMAKE_POLICY_VERSION_MINIMUM=3.5 -D CMAKE_CXX_FLAGS="-include cstdint" .
+          # The ispc objects aren't built position independent, so they can't
+          # be linked into the PIE executable Ubuntu's gcc produces by default.
+          cmake -D SUPPORT_BC7E=TRUE -D CMAKE_POLICY_VERSION_MINIMUM=3.5 -D CMAKE_CXX_FLAGS="-include cstdint" -D CMAKE_EXE_LINKER_FLAGS="-no-pie" .
           make -j"$(nproc)"
           mkdir -p "$GITHUB_WORKSPACE/tools"
           cp bc7enc "$GITHUB_WORKSPACE/tools/"
