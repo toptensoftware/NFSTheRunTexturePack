@@ -28,6 +28,11 @@ A set of remastered and upscaled textures assets for NFS The Run.
 ![New](preview/loading-map-b.png)
 
 
+### Stage Complete Maps
+
+![Old](preview/stage-complete-a.png)
+![New](preview/stage-complete-b.png)
+
 ### Start Next Stage Maps
 
 ![Old](preview/stage-maps-a.png)
