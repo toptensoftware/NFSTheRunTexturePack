@@ -116,7 +116,7 @@ for (const page of pages) {
 
     if (ddsDir) {
         fs.rmSync(page.ddsFile, { force: true });
-        run('magick', [page.file, '-define', 'dds:compression=none', '-define', 'dds:mipmaps=0', page.ddsFile]);
+        run('bc7enc', ['-q', '-g', page.file, page.ddsFile]);
         if (!fs.existsSync(page.ddsFile))
             fail(`magick didn't write ${page.ddsFile}`);
         console.log(`${page.file} -> ${page.ddsFile}`);
